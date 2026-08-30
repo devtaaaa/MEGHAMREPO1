@@ -65,7 +65,8 @@ function App() {
       });
 
       if (!res.ok) {
-        throw new Error(res.status === 429 ? 'Please try again in a moment.' : 'Something went wrong while creating your review.');
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || (res.status === 429 ? 'Please try again in a moment.' : 'Something went wrong while creating your review.'));
       }
 
       const data = await res.json();
