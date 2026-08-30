@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { handle } from 'hono/cloudflare-pages'
 
 type Bindings = {
   GROQ_API_KEY: string
@@ -93,3 +94,4 @@ Recommend: ${recommend}`
 })
 
 export default app
+export const onRequest = handle(app)
