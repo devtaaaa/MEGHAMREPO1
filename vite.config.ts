@@ -85,7 +85,7 @@ Recommend: ${recommend}`
                   return
                 }
 
-                const data = await apiRes.json()
+                const data = (await apiRes.json()) as any
                 console.log('[Review API] Raw Groq response:', JSON.stringify(data, null, 2))
                 const reviewText = data.choices?.[0]?.message?.content || ''
 
