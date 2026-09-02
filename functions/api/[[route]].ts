@@ -7,13 +7,13 @@ type Bindings = {
   GROQ_MODEL?: string
 }
 
-const app = new Hono<{ Bindings: Bindings }>()
+const app = new Hono<{ Bindings: Bindings }>().basePath('/api')
 
-app.use('/api/*', cors())
+app.use('/*', cors())
 
-app.post('/api/generate-review', async (c) => {
+app.post('/generate-review', async (c) => {
   try {
-    console.log('[Review API] Request received')
+    console.log('[Review API] Request received at:', c.req.url)
     const body = await c.req.json()
     const { food, enjoyedMost, customText, service, recommend } = body
 
