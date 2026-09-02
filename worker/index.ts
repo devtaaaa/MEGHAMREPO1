@@ -1,17 +1,16 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { handle } from 'hono/cloudflare-pages'
 
 type Bindings = {
   GROQ_API_KEY: string
   GROQ_MODEL?: string
 }
 
-const app = new Hono<{ Bindings: Bindings }>().basePath('/api')
+const app = new Hono<{ Bindings: Bindings }>()
 
-app.use('/*', cors())
+app.use('/api/*', cors())
 
-app.post('/generate-review', async (c) => {
+app.post('/api/generate-review', async (c) => {
   try {
     console.log('[Review API] Request received at:', c.req.url)
     const body = await c.req.json()
@@ -94,4 +93,3 @@ Recommend: ${recommend}`
 })
 
 export default app
-export const onRequest = handle(app)
